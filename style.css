@@ -1,0 +1,21 @@
+ul{
+    list-style:none;
+}
+.text{
+    margin:20px 20px 20px 0px;
+    background-color: rgba(152, 251, 152, .5);
+    padding: 20px;
+    width:auto;
+    border-radius: 10px;
+    display: inline-block;
+}
+.posts>li>ul{
+    position: relative;
+    left:-20px;
+}
+.title{
+    text-align: center;
+}
+.time{
+    font-style: italic;
+}
