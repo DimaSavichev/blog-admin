@@ -1,17 +1,23 @@
+textarea{
+    height:80vh;
+}
+
+.add{
+    position:fixed;
+    height:50px;
+    width:50px;
+    bottom:5px;
+    right: 5px;
+}
 ul{
     list-style:none;
 }
-.text{
-    margin:20px 20px 20px 0px;
-    background-color: rgba(152, 251, 152, .5);
-    padding: 20px;
-    width:auto;
-    border-radius: 10px;
-    display: inline-block;
+.card{
+    margin: 10px 0;
+    padding:5px 0;
 }
-.posts>li>ul{
-    position: relative;
-    left:-20px;
+.form-control{
+    margin-top:10px;
 }
 .title{
     text-align: center;
