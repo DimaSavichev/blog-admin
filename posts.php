@@ -23,9 +23,9 @@
     //преобразуем результат в массив массивов = массив записей
     $posts = mysqli_fetch_all($query_result);
     foreach ($posts as $post){
-        echo '<div class="card offset-1 col-10"><ul><li><a href="article.php?id='.$post[0].'">'.$post[1].'</a></li>
-        <li>'.$post[3].'<li>
-        <li>'.substr($post[2],0,200).'...'.'</ul>';
+        echo '<div class="card offset-1 col-10"><ul><li><a href="article.php?id='.htmlspecialchars($post[0], ENT_QUOTES, 'UTF-8' ).'">'.htmlspecialchars($post[1], ENT_QUOTES, 'UTF-8' ).'</a></li>
+        <li>'.htmlspecialchars($post[3], ENT_QUOTES, 'UTF-8' ).'<li>
+        <li>'.substr(htmlspecialchars($post[2], ENT_QUOTES, 'UTF-8' ),0,200).'...'.'</ul>';
         if (isset($_SESSION['auth'])){
             if ($_SESSION['auth']==true){
                 echo '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
