@@ -3,6 +3,12 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <?php
+function BlockSQLInjection($str)
+{
+return str_replace(array("'",'"'),array("&quot;","&quot;"),$str);
+}
+?>
+<?php
     session_start();
     if (isset($_SESSION['auth'])){
         if ($_SESSION['auth']==true){
@@ -16,8 +22,8 @@
                     <p><input type="submit" value="Сохранить" class="btn btn-success col-4 offset-4"></p>
                 </form>';
             }else{
-                $text=$_POST['text'];
-                $heading=$_POST['heading'];
+                $text=BlockSQLInjection($_POST['text']);
+                $heading=BlockSQLInjection($_POST['heading']);
                 $query_result = mysqli_query($connection, "INSERT INTO `posts` (`heading`, `text`) VALUES ('".$heading."','".$text."');");
                 header("Location: /posts.php");
             }

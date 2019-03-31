@@ -3,10 +3,17 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <?php
+function BlockSQLInjection($str)
+{
+return str_replace(array("'",'"'),array("&quot;","&quot;"),$str);
+}
+?>
+<?php
     session_start();
     if (isset($_SESSION['auth'])){
         if ($_SESSION['auth']==true){
             if (isset($_GET['id'])){
+                if (is_numeric($_GET['id'])){
                 $connection = mysqli_connect('127.0.0.1', 'root', '');
                 mysqli_select_db($connection, 'blog');
                 mysqli_set_charset($connection, 'utf8');
@@ -20,10 +27,11 @@
                     </form>';
                 }else{
                     $id=$_GET['id'];
-                    $text=$_POST['text'];
-                    $heading=$_POST['heading'];
+                    $text=BlockSQLInjection($_POST['text']);
+                    $heading=BlockSQLInjection($_POST['heading']);
                     $query_result = mysqli_query($connection, "UPDATE `posts` SET `heading`='".$heading."', `text`='".$text."' WHERE `id`=".$id.";");
                     header("Location: /posts.php");
+                }
                 }
             }else{
                 echo "<div class='card col-6 offset-3' style='text-align:center;'><h2 class='card-title'>Вы не туда попали :)</h2>

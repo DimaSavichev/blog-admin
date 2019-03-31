@@ -3,8 +3,15 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <?php
+function BlockSQLInjection($str)
+{
+return str_replace(array("'",'"'),array("&quot;","&quot;"),$str);
+}
+?>
+<?php
 session_start();
 if (isset($_GET['id'])){
+    if (is_numeric($_GET['id'])){
     //хост, логин, пароль
     $connection = mysqli_connect('127.0.0.1', 'root', '');
     //выбор БД и кодировки
@@ -19,11 +26,11 @@ if (isset($_GET['id'])){
         if ($_POST["com"]==""){
             echo "<p>Введите текст комментария</p>";
         }else{
-            $comment=$_POST["com"];
+            $comment=BlockSQLInjection($_POST["com"]);
             if ($_POST["name"]==""){
                 $name="Аноним";
             }else{
-                $name=$_POST["name"];
+                $name=BlockSQLInjection($_POST["name"]);
             }
             $lol = mysqli_query($connection, "INSERT INTO `comments` (`author`, `text`, `post`) VALUES ('{$name}','{$comment}','{$_GET["id"]}');");
         }
@@ -60,6 +67,11 @@ if (isset($_GET['id'])){
     }
     echo '</ul></div>';
     $_POST = [];
+    }else{
+      echo "<div class='card col-6 offset-3' style='text-align:center;'><h2 class='card-title'>Вы не туда попали :)</h2>
+    <img class='card-img-top' src='nope.png'>
+    </div>";  
+    }
 }else{
     echo "<div class='card col-6 offset-3' style='text-align:center;'><h2 class='card-title'>Вы не туда попали :)</h2>
     <img class='card-img-top' src='nope.png'>
